@@ -1,12 +1,15 @@
+const {Op} = require('sequelize');
 const db = require('../database/models');
 
 const getAllGenres = async () =>{
 
     try {
         const genres = await db.Genre.findAll({
-            attributes : {
+
+            order : [['name', 'ASC']]
+            /*attributes : {
                 exclude : ['created_at', 'updated_at']
-            },
+            },*/
            /* include : [
                 {
                     association : 'genre',
@@ -31,7 +34,7 @@ const getAllGenres = async () =>{
     }
 
 }
-
+/*
 const getGenreById = async (id) => {
 
     try {
@@ -60,7 +63,7 @@ const getGenreById = async (id) => {
                     }
                 }
         ]*/
-        });
+      /*  });
         return genre
     } catch (error) {
         console.log(error);
@@ -71,8 +74,8 @@ const getGenreById = async (id) => {
     }
 
 }
-
+*/
 module.exports = {
     getAllGenres,
-    getGenreById
+    //getGenreById
 }

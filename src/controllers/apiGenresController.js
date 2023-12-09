@@ -1,3 +1,4 @@
+//const db =require('../database/models')
 const { getAllGenres, getGenreById } = require("../services/genresServices")
 
 module.exports = {
@@ -7,12 +8,17 @@ module.exports = {
 
             return res.status(200).json({
                 ok : true,
-                data : genres
+                
+                meta : {
+                    total : genres.length
+                },
+                
+                data : genres,
             })
 
         } catch (error) {
             console.log(error)
-            return res.status(errors.status || 500).json({
+            return res.status(error.status || 500).json({
                 ok : false,
                 status : error.status || 500,
                 error : error.message || 'upss, Error'

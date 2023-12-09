@@ -4,8 +4,11 @@ const { getAllMovies, getMovieById, storeMovie, updateMovie, deleteMovie } = req
 
 module.exports = {
     index : async (req, res) => {
+
+        const {keyword} = req.query
+
         try {
-            const { count,movies }= await getAllMovies(req.query.limit,req.skip);
+            const { count,movies }= await getAllMovies(req.query.limit,req.skip, keyword);
 
             const pagesCount = Math.ceil(count / req.query.limit);
             const currentPage = req.query.page;
@@ -55,6 +58,8 @@ module.exports = {
     },
     store : async (req,res) => {
         try {
+
+            console.log(req.body,'<<<<<<<<<<<<<<<<')
             
             const {title, rating, release_date, awards, length, genre_id, actors} = req.body;
 
@@ -68,7 +73,8 @@ module.exports = {
             return res.status(200).json({
                 ok : true,
                 message : 'Pelicula agregada con exito',
-                url : `${req.protocol}://${req.get('host')}/api/v1/movies/${movie.id}`
+                url : `${req.protocol}://${req.get('host')}/api/v1/movies/${movie.id}`,
+                data : movie
             })
 
         } catch (error) {
